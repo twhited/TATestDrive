@@ -14,50 +14,8 @@ class QuestionsController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Question $question)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Question $question)
-    {
-        //
+        $question = Question::all()->first();
+        return view('test-drive', compact('question'));
     }
 
     /**
@@ -69,17 +27,7 @@ class QuestionsController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Question $question)
-    {
-        //
+        $question(request(['question_text', 'display_text', 'required', 'type']));
+        return redirect('/questions');
     }
 }

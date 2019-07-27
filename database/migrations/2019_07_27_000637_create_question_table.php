@@ -13,7 +13,7 @@ class CreateQuestionTable extends Migration
      */
     public function up()
     {
-        Schema::create('question', function (Blueprint $table) {
+        Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
             $table->text('question_text');
             $table->string('display_text');
@@ -30,6 +30,6 @@ class CreateQuestionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('question');
+        Schema::dropIfExists('questions');
     }
 }

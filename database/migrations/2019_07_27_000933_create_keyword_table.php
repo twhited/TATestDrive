@@ -13,7 +13,7 @@ class CreateKeywordTable extends Migration
      */
     public function up()
     {
-        Schema::create('keyword', function (Blueprint $table) {
+        Schema::create('keywords', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('question_id');
             $table->string('name');
@@ -28,6 +28,6 @@ class CreateKeywordTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('keyword');
+        Schema::dropIfExists('keywords');
     }
 }
