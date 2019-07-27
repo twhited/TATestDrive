@@ -18,6 +18,7 @@ class CreateKeywordTable extends Migration
             $table->unsignedInteger('question_id');
             $table->string('value');
             $table->timestamps();
+            $table->foreign('question_id')->references('id')->on('questions');
         });
     }
 
