@@ -14,9 +14,9 @@
 You are provided a question object with the following properties: an array of question answer values, full question text, an abbreviated display text, question type, whether or not the question is considered required, and keyword tags.
 
 Create a page where a user can perform the following tasks:
-- View the main question info
+- [x]View the main question info
 - Open a modal and edit the question info
-- View a list of the answer values
+- [x]View a list of the answer values
 - Add an additional answer value (should append to the list without a page refresh)
 - Delete an answer value
 
@@ -28,7 +28,7 @@ We haven't provided a mockup or any specified design guidelines. We won't be ass
 ---
 
 ### Backend
-Using the provided data object, setup a database, models, and create a controller that returns a `$question` to the view. The controller should have methods for showing and updating questions, as well as methods for adding and deleting answer values.
+[x] Using the provided data object, setup a database, models, and create a controller that returns a `$question` to the view. The controller should have methods for showing and updating questions, as well as methods for adding and deleting answer values.
 
 ```json
 '{ "question": {
@@ -48,7 +48,8 @@ Using the provided data object, setup a database, models, and create a controlle
 ```
 
 ### Frontend
-The main question information should be displayed using the Blade template. (Main view: `resources/views/test-drive.blade.php`) Please use VueJS to create an edit modal. Vue will most likely be needed for deleting answer values and re-fetching the answer list.
+[x]The main question information should be displayed using the Blade template. (Main view: `resources/views/test-drive.blade.php`) 
+Please use VueJS to create an edit modal. Vue will most likely be needed for deleting answer values and re-fetching the answer list.
 
 Bootstrap layout utilities and classes are available for use. We prefer you to use Bootstrap on the page since it is used across all TA front-end projects. However, feel free to add additional CDNs if Bootstrap is a blocker to your progress.
 

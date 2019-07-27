@@ -40,6 +40,7 @@
         </div>
 
         <!-- Scripts -->
+        <script src="/js/app.js" charset="utf-8"></script>
         @stack('scripts')
     </body>
 </html>
