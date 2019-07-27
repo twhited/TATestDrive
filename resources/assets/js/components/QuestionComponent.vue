@@ -28,29 +28,39 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Edit Question</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="display_text">Display Text</label>
-                            <input type="text" class="form-control" name="display_text" id="display_text" placeholder="Display Text" v-model="displayText" />
+                    <form ref="myForm">
+                        <input type="hidden" name="_method" value="PATCH">
+                        <slot>
+                            <!-- CSRF gets injected into this slot -->
+                        </slot> 
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="display_text">Display Text</label>
+                                <input type="text" class="form-control" name="display_text" id="display_text" placeholder="Display Text" v-model="displayText" />
+                            </div>
+                            <div class="form-group">
+                                <label for="question_text">Question Text</label>
+                                <textarea class="form-control" name="question_text" id="question_text" rows="3" v-model="questionText"></textarea>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="required" id="required" v-model="required"> Required
+                                </label>
+                            </div>
+                            <div class="form-group">
+                            <label for="type">Type</label>
+                                <input type="text" class="form-control" name="type" id="type" aria-describedby="helpId" placeholder="Type" v-model="type" />
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="question_text">Question Text</label>
-                            <textarea class="form-control" name="question_text" id="question_text" rows="3" v-model="questionText"></textarea>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="saveQuestion">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" name="required" id="required" v-model="required"> Required
-                            </label>
-                        </div>
-                        <div class="form-group">
-                        <label for="type">Type</label>
-                            <input type="text" class="form-control" name="type" id="type" aria-describedby="helpId" placeholder="Type" v-model="type" />
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -65,7 +75,7 @@
                 questionText: '',
                 type: '',
                 required: false,
-                answers: []
+                answers: []                
             }
         },
         props:['questionData', 'answerData'],
@@ -75,6 +85,15 @@
             this.type = this.questionData.type;
             this.required = this.questionData.required;
             this.answers = this.answerData;
+        },
+        methods: {
+            saveQuestion() {
+                axios.post('/questions/1', new FormData(this.$refs.myForm)).then(response => {
+                    alert('Question updated!');
+                }).catch(error => {
+                    console.log(error);
+                })
+            }
         }
     }
 </script>
