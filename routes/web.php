@@ -13,3 +13,6 @@
 
 
 Route::get('/', 'QuestionsController@index');
+
+Route::resource('/answers', 'AnswersController');
+Route::resource('/keywords', 'KeywordsController');

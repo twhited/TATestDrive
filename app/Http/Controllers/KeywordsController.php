@@ -8,56 +8,15 @@ use Illuminate\Http\Request;
 class KeywordsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Keyword  $keyword
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Keyword $keyword)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Keyword  $keyword
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Keyword $keyword)
-    {
-        //
+        Keyword::create(request(['value']));
+        return redirect('/');
     }
 
     /**
@@ -69,7 +28,8 @@ class KeywordsController extends Controller
      */
     public function update(Request $request, Keyword $keyword)
     {
-        //
+        $keyword->update(request(['value']));
+        return redirect('/');
     }
 
     /**
@@ -80,6 +40,7 @@ class KeywordsController extends Controller
      */
     public function destroy(Keyword $keyword)
     {
-        //
+        $keyword->delete();
+        return redirect('/');
     }
 }

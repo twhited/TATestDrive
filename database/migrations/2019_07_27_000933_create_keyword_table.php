@@ -16,7 +16,7 @@ class CreateKeywordTable extends Migration
         Schema::create('keywords', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('question_id');
-            $table->string('name');
+            $table->string('value');
             $table->timestamps();
         });
     }

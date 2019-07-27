@@ -8,26 +8,6 @@ use Illuminate\Http\Request;
 class AnswersController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -35,29 +15,8 @@ class AnswersController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Answer  $answer
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Answer $answer)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Answer  $answer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Answer $answer)
-    {
-        //
+        Answer::create(request(['value']));
+        return redirect('/');
     }
 
     /**
@@ -69,7 +28,8 @@ class AnswersController extends Controller
      */
     public function update(Request $request, Answer $answer)
     {
-        //
+        $answer->update(request(['value']));
+        return redirect('/');
     }
 
     /**
@@ -80,6 +40,7 @@ class AnswersController extends Controller
      */
     public function destroy(Answer $answer)
     {
-        //
+        $answer->delete();
+        return redirect('/');
     }
 }
