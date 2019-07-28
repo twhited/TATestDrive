@@ -27,7 +27,8 @@ class QuestionsController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        $question(request(['question_text', 'display_text', 'required', 'type']));
-        return redirect('/questions');
+        $question->required = request()->has('required');
+        $question->update(request(['question_text', 'display_text', 'type']));
+        return redirect('/');
     }
 }
