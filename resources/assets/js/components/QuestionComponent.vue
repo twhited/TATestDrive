@@ -11,6 +11,7 @@
                             <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
                                 {{ item.value }}
                             </label>
+                            <a href="#" v-on:click="editAnswer(item)" data-toggle="modal" data-target="#editAnswerModal">Edit</a>
                         </div>
 
                         <br />
@@ -64,6 +65,38 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal" id="editAnswerModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Answer</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form ref="editAnswerForm">
+                        <input type="hidden" name="_method" value="PATCH" />
+                        <input type="hidden" name="id" v-model="currentAnswer.id" /> 
+                        <slot>
+                            <!-- CSRF gets injected into this slot -->
+                        </slot> 
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="display_text">Answer</label>
+                                <input type="text" class="form-control" name="value" id="value" placeholder="Display Text" v-model="currentAnswer.value" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="saveAnswer">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
     </div>
 </template>
 
@@ -75,7 +108,8 @@
                 questionText: '',
                 type: '',
                 required: false,
-                answers: []                
+                answers: [],
+                currentAnswer: ''                
             }
         },
         props:['questionData', 'answerData'],
@@ -93,6 +127,17 @@
                 }).catch(error => {
                     console.log(error);
                 })
+            },
+
+            saveAnswer() {
+                axios.post('/answers/'+this.currentAnswer.id, new FormData(this.$refs.editAnswerForm)).then(response => {
+                    alert('Answer updated!');
+                }).catch(error => {
+                    console.log(error);
+                })
+            },
+            editAnswer(answer){
+                this.currentAnswer = answer;
             }
         }
     }
