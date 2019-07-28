@@ -14,6 +14,9 @@
                             <a href="#" v-on:click="editAnswer(item)" data-toggle="modal" data-target="#editAnswerModal">Edit</a>
                         </div>
 
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createAnswerModal">
+                            Add Answer
+                        </button>
                         <br />
 
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#questionModal">
@@ -66,6 +69,35 @@
             </div>
         </div>
 
+        <div class="modal" id="createAnswerModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Question</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form ref="createAnswerForm">
+                        <input type="hidden" name="question_id" value="1">
+                        <slot>
+                            <!-- CSRF gets injected into this slot -->
+                        </slot> 
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="display_text">Answer</label>
+                                <input type="text" class="form-control" name="value" id="value" placeholder="Answer" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="storeAnswer">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="modal" id="editAnswerModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -88,9 +120,17 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="saveAnswer">Save changes</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="updateAnswer">Save changes</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="destroyAnswer">Delete Answer</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
+                    </form>
+                     <form ref="destroyAnswerForm">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <input type="hidden" name="id" v-model="currentAnswer.id" /> 
+                        <slot>
+                            <!-- CSRF gets injected into this slot -->
+                        </slot> 
                     </form>
                 </div>
             </div>
@@ -109,7 +149,7 @@
                 type: '',
                 required: false,
                 answers: [],
-                currentAnswer: ''                
+                currentAnswer: ''          
             }
         },
         props:['questionData', 'answerData'],
@@ -128,16 +168,37 @@
                     console.log(error);
                 })
             },
-
-            saveAnswer() {
-                axios.post('/answers/'+this.currentAnswer.id, new FormData(this.$refs.editAnswerForm)).then(response => {
-                    alert('Answer updated!');
+            createAnswer(){
+                this.currentAnswer = [];
+            },
+            storeAnswer() {
+                axios.post('/answers', new FormData(this.$refs.createAnswerForm)).then(response => {
+                    console.log(response);
+                    this.answers.push(response.data);
+                    alert('Answer created!');
                 }).catch(error => {
                     console.log(error);
                 })
             },
             editAnswer(answer){
                 this.currentAnswer = answer;
+            },
+            updateAnswer() {
+                axios.post('/answers/'+this.currentAnswer.id, new FormData(this.$refs.editAnswerForm)).then(response => {
+                    this.currentAnswer = [];
+                    alert('Answer updated!');
+                }).catch(error => {
+                    console.log(error);
+                })
+            },
+            destroyAnswer(answer){
+                axios.post('/answers/'+this.currentAnswer.id, new FormData(this.$refs.destroyAnswerForm)).then(response => {
+                    this.answers.splice(this.answers.indexOf(this.currentAnswer), 1);
+                    this.currentAnswer = [];
+                    alert('Answer updated!');
+                }).catch(error => {
+                    console.log(error);
+                })
             }
         }
     }

@@ -15,8 +15,11 @@ class AnswersController extends Controller
      */
     public function store(Request $request)
     {
-        Answer::create(request(['value']));
-        return redirect('/');
+        $answer = new Answer;
+        $answer->question_id = request('question_id');
+        $answer->value = request('value');
+        $answer->save();
+        return $answer;
     }
 
     /**
