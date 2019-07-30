@@ -38,9 +38,6 @@
                     </div>
                     <form ref="myForm">
                         <input type="hidden" name="_method" value="PATCH">
-                        <slot>
-                            <!-- CSRF gets injected into this slot -->
-                        </slot> 
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="display_text">Display Text</label>
@@ -80,9 +77,6 @@
                     </div>
                     <form ref="createAnswerForm">
                         <input type="hidden" name="question_id" v-model="question.id">
-                        <slot>
-                            <!-- CSRF gets injected into this slot -->
-                        </slot> 
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="display_text">Answer</label>
@@ -110,9 +104,6 @@
                     <form ref="editAnswerForm">
                         <input type="hidden" name="_method" value="PATCH" />
                         <input type="hidden" name="id" v-model="currentAnswer.id" /> 
-                        <slot>
-                            <!-- CSRF gets injected into this slot -->
-                        </slot> 
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="display_text">Answer</label>
@@ -128,9 +119,6 @@
                      <form ref="destroyAnswerForm">
                         <input type="hidden" name="_method" value="DELETE" />
                         <input type="hidden" name="id" v-model="currentAnswer.id" /> 
-                        <slot>
-                            <!-- CSRF gets injected into this slot -->
-                        </slot> 
                     </form>
                 </div>
             </div>
@@ -186,7 +174,7 @@
                 })
             },
             destroyAnswer(answer){
-                axios.post('/answers/'+this.currentAnswer.id, new FormData(this.$refs.destroyAnswerForm)).then(response => {
+                axios.post('/api/answers/'+this.currentAnswer.id, new FormData(this.$refs.destroyAnswerForm)).then(response => {
                     this.answers.splice(this.answers.indexOf(this.currentAnswer), 1);
                     this.currentAnswer = [];
                     alert('Answer updated!');

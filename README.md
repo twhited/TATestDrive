@@ -74,9 +74,7 @@ php artisan db:seed
 - [ ] Nothing was done with keywords in the vue area.
 - [ ] Changing question required/type does not affect the layout of the question
 - [ ] The answer parts of the question component should be split into their own component (needs state management?)
-- [ ] Most of the controller functions should be api calls
-- [ ] The vue implementation feels hacked. A portion of this is probably because of lack of api calls (I had to simulate form posts for everything).
 - [ ] There should probably be a seeder per database table.
 - [ ] There is no validation
 - [ ] Unit testing
-- [ ] Github vulnerabilities
+- [ ] Routes are wildcards, they should include 'except' spec.
