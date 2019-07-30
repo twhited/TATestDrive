@@ -146,7 +146,7 @@
             return {
                 question: '',
                 answers: [],
-                currentAnswer: ''          
+                currentAnswer: ''                
             }
         },
         props:['questionData', 'answerData'],
@@ -156,7 +156,7 @@
         },
         methods: {
             saveQuestion() {
-                axios.post('/questions/'+this.question.id, new FormData(this.$refs.myForm)).then(response => {
+                axios.post('/api/questions/'+this.question.id, new FormData(this.$refs.myForm)).then(response => {
                     alert('Question updated!');
                 }).catch(error => {
                     console.log(error);
@@ -166,7 +166,7 @@
                 this.currentAnswer = [];
             },
             storeAnswer() {
-                axios.post('/answers', new FormData(this.$refs.createAnswerForm)).then(response => {
+                axios.post('/api/answers', new FormData(this.$refs.createAnswerForm)).then(response => {
                     console.log(response);
                     this.answers.push(response.data);
                     alert('Answer created!');
@@ -178,7 +178,7 @@
                 this.currentAnswer = answer;
             },
             updateAnswer() {
-                axios.post('/answers/'+this.currentAnswer.id, new FormData(this.$refs.editAnswerForm)).then(response => {
+                axios.post('/api/answers/'+this.currentAnswer.id, new FormData(this.$refs.editAnswerForm)).then(response => {
                     this.currentAnswer = [];
                     alert('Answer updated!');
                 }).catch(error => {
