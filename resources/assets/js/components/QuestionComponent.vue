@@ -3,9 +3,13 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card card-default">
-                    <div class="card-header">{{this.displayText}}</div>
+                    <div class="card-header">{{question.display_text}}
+                        <button type="button" class="close"  data-toggle="modal" data-target="#questionModal">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </button>
+                    </div>
                     <div class="card-body">
-                        <p>{{this.questionText}}</p>
+                        <p>{{question.question_text}}</p>
                         <div v-for="item of answers" class="form-check">
                             <label class="form-check-label">
                             <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
@@ -14,13 +18,9 @@
                             <a href="#" v-on:click="editAnswer(item)" data-toggle="modal" data-target="#editAnswerModal">Edit</a>
                         </div>
 
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createAnswerModal">
-                            Add Answer
-                        </button>
                         <br />
-
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#questionModal">
-                            Edit Question
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createAnswerModal">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Add Answer
                         </button>
                     </div>
                 </div>
@@ -44,24 +44,24 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="display_text">Display Text</label>
-                                <input type="text" class="form-control" name="display_text" id="display_text" placeholder="Display Text" v-model="displayText" />
+                                <input type="text" class="form-control" name="display_text" id="display_text" placeholder="Display Text" v-model="question.display_text" />
                             </div>
                             <div class="form-group">
                                 <label for="question_text">Question Text</label>
-                                <textarea class="form-control" name="question_text" id="question_text" rows="3" v-model="questionText"></textarea>
+                                <textarea class="form-control" name="question_text" id="question_text" rows="3" v-model="question.question_text"></textarea>
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" name="required" id="required" v-model="required"> Required
+                                    <input class="form-check-input" type="checkbox" name="required" id="required" v-model="question.required"> Required
                                 </label>
                             </div>
                             <div class="form-group">
                             <label for="type">Type</label>
-                                <input type="text" class="form-control" name="type" id="type" aria-describedby="helpId" placeholder="Type" v-model="type" />
+                                <input type="text" class="form-control" name="type" id="type" aria-describedby="helpId" placeholder="Type" v-model="question.type" />
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="saveQuestion">Save changes</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="saveQuestion"><i class="fa fa-floppy-o" aria-hidden="true"></i> Update Question</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </form>
@@ -79,7 +79,7 @@
                         </button>
                     </div>
                     <form ref="createAnswerForm">
-                        <input type="hidden" name="question_id" value="1">
+                        <input type="hidden" name="question_id" v-model="question.id">
                         <slot>
                             <!-- CSRF gets injected into this slot -->
                         </slot> 
@@ -90,7 +90,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="storeAnswer">Save changes</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="storeAnswer"><i class="fa fa-floppy-o" aria-hidden="true"></i> Add Answer</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </form>
@@ -120,8 +120,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="updateAnswer">Save changes</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="destroyAnswer">Delete Answer</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="updateAnswer"><i class="fa fa-floppy-o" aria-hidden="true"></i> Update Answer</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" v-on:click="destroyAnswer"><i class="fa fa-trash" aria-hidden="true"></i> Delete Answer</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </form>
@@ -144,25 +144,19 @@
     export default {
         data() {
             return {
-                displayText: '',
-                questionText: '',
-                type: '',
-                required: false,
+                question: '',
                 answers: [],
                 currentAnswer: ''          
             }
         },
         props:['questionData', 'answerData'],
         mounted() {
-            this.displayText = this.questionData.display_text;
-            this.questionText = this.questionData.question_text;
-            this.type = this.questionData.type;
-            this.required = this.questionData.required;
+            this.question = this.questionData;
             this.answers = this.answerData;
         },
         methods: {
             saveQuestion() {
-                axios.post('/questions/1', new FormData(this.$refs.myForm)).then(response => {
+                axios.post('/questions/'+this.question.id, new FormData(this.$refs.myForm)).then(response => {
                     alert('Question updated!');
                 }).catch(error => {
                     console.log(error);

@@ -71,17 +71,12 @@ php artisan db:seed
 ```
 ### TODO
 - [ ] Edit edits the actual vue object. If you click cancel, the edit persists locally, but not at the database. Temporary variables should be used.
-- [ ] Nothing was done with keywords
+- [ ] Nothing was done with keywords in the vue area.
 - [ ] Changing question required/type does not affect the layout of the question
-- [ ] The question component hardcodes 1 as the question id
-- [ ] The question component uses individual variables rather than a model with all needed data (see previous todo)
 - [ ] The answer parts of the question component should be split into their own component (needs state management?)
 - [ ] Most of the controller functions should be api calls
 - [ ] The vue implementation feels hacked. A portion of this is probably because of lack of api calls (I had to simulate form posts for everything).
-- [ ] Answers model allows you to mass assign question_id. A user should be verified they have read access to the question_id before persisting
-- [ ] I hate the button layout/color/etc
 - [ ] There should probably be a seeder per database table.
 - [ ] There is no validation
 - [ ] Unit testing
-- [ ] General styling
 - [ ] Github vulnerabilities
