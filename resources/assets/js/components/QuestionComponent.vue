@@ -1,6 +1,9 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row">
+            <div class="col-md-4 text-right">
+                <img src="/img/logo/technologyadvice-logo-square-light-300px.png" />
+            </div>
             <div class="col-md-8">
                 <div class="card card-default">
                     <div class="card-header">{{question.display_text}}
