@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="row">
+        <div class="row no-gutters">
             <div class="col-md-4 text-right">
                 <img src="/img/logo/technologyadvice-logo-square-light-300px.png" />
             </div>
@@ -15,10 +15,10 @@
                         <p>{{question.question_text}}</p>
                         <div v-for="item of answers" class="form-check">
                             <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
+                                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" >
                                 {{ item.value }}
                             </label>
-                            <a href="#" v-on:click="editAnswer(item)" data-toggle="modal" data-target="#editAnswerModal">Edit</a>
+                            <a href="#" v-on:click="editAnswer(item)" data-toggle="modal" data-target="#editAnswerModal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                         </div>
 
                         <br />
@@ -125,8 +125,6 @@
                     </form>
                 </div>
             </div>
-
-
         </div>
     </div>
 </template>
@@ -160,6 +158,7 @@
                 axios.post('/api/answers', new FormData(this.$refs.createAnswerForm)).then(response => {
                     console.log(response);
                     this.answers.push(response.data);
+                    this.currentAnswer = [];
                     alert('Answer created!');
                 }).catch(error => {
                     console.log(error);
